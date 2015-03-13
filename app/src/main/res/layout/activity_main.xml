@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.blackorwhite.oso.MainActivity">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lb_notif"
+        android:id="@+id/sw_alarm"
+        android:onClick="onswAlarmClicked"
+        android:layout_below="@+id/radioAlarmGroup"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_Refresh"
+        android:id="@+id/Refresh"
+        android:layout_above="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:onClick="onbtRefreshClicked" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lb_LastSeen"
+        android:id="@+id/tv_titlelastseen"
+        android:layout_below="@+id/sw_alarm"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lb_Etat"
+        android:id="@+id/tv_titlestate"
+        android:layout_below="@+id/tv_titlelastseen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_lastseen"
+        android:layout_alignBottom="@+id/tv_titlelastseen"
+        android:layout_toRightOf="@+id/tv_titlelastseen"
+        android:layout_alignTop="@+id/tv_titlelastseen"
+        android:layout_alignRight="@+id/radioAlarmGroup"
+        android:layout_alignEnd="@+id/radioAlarmGroup" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_state"
+        android:layout_alignTop="@+id/tv_titlestate"
+        android:layout_alignRight="@+id/tv_lastseen"
+        android:layout_alignEnd="@+id/tv_lastseen"
+        android:layout_alignBottom="@+id/tv_titlestate"
+        android:layout_toRightOf="@+id/tv_titlelastseen" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:id="@+id/radioAlarmGroup"
+        android:focusableInTouchMode="false">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sw_Disarm"
+            android:id="@+id/radioDisarm"
+            android:checked="false"
+            android:onClick="onRGClick"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sw_Arm"
+            android:id="@+id/radioArm"
+            android:checked="false"
+            android:onClick="onRGClick"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sw_SilencedDisarm"
+            android:id="@+id/radioSilencedArm"
+            android:checked="false"
+            android:onClick="onRGClick"/>
+
+    </RadioGroup>
+
+</RelativeLayout>
