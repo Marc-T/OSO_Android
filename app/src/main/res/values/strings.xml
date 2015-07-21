@@ -11,8 +11,10 @@
     <string name="alarm_deactivated">Alarme désactivée</string>
     <string name="alarm_activated">Alarme activée</string>
     <string name="alarmsilenced_activated">Alarme silencieuse activée</string>
-    <string name="alarm_fired">Alarme déclenchée</string>
-    <string name="alarmsilenced_fired">Alarme silencieuse déclenchée</string>
+    <string name="alarm_salon_fired">Alarme salon déclenchée</string>
+    <string name="alarm_garage_fired">Alarme garage déclenchée</string>
+    <string name="alarmsilenced_salon_fired">Alarme silencieuse salon déclenchée</string>
+    <string name="alarmsilenced_garage_fired">Alarme silencieuse garage déclenchée</string>
     <string name="alarm_unreachable">Serveur injoignable</string>
     <string name="sw_Arm">Armer</string>
     <string name="sw_Disarm">Désarmer</string>

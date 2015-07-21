@@ -40,10 +40,16 @@ public class CheckStateSchedulingService extends IntentService {
             String State = Cli.downloadUrl("GetState");
 
             if (State.equals("2")){
-                sendNotification(getString(R.string.alarm_fired), true);
+                sendNotification(getString(R.string.alarm_salon_fired), true);
             }
-            if (State.equals("4")){
-                sendNotification(getString(R.string.alarmsilenced_fired), true);
+            if (State.equals("3")){
+                sendNotification(getString(R.string.alarm_garage_fired), true);
+            }
+            if (State.equals("5")){
+                sendNotification(getString(R.string.alarmsilenced_salon_fired), true);
+            }
+            if (State.equals("6")){
+                sendNotification(getString(R.string.alarmsilenced_garage_fired), true);
             }
 
         } catch (IOException e) {

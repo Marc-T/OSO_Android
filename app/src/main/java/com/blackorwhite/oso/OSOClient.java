@@ -14,7 +14,7 @@ import java.net.URL;
 public class OSOClient {
     private static final String DEBUG_TAG = "ReqHTTP";
     private ConnectivityManager connMgr;
-    private static final String URL = "http://192.168.100.253/";
+    private static final String URL = "http://greenhole.servebeer.com/";
 
     public OSOClient(ConnectivityManager _connMgr)
     {
