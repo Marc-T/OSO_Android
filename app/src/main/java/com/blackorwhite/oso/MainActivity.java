@@ -134,13 +134,19 @@ public class MainActivity extends Activity {
                 tvState.setText(getString(R.string.alarm_activated));
                 radioAlarmGroup.check(R.id.radioArm);
             } else if (result.equals("2")){
-                tvState.setText(getString(R.string.alarm_fired));
+                tvState.setText(getString(R.string.alarm_salon_fired));
                 radioAlarmGroup.check(R.id.radioArm);
             } else if (result.equals("3")){
-                tvState.setText(getString(R.string.alarmsilenced_activated));
+                tvState.setText(getString(R.string.alarm_garage_fired));
                 radioAlarmGroup.check(R.id.radioSilencedArm);
             } else if (result.equals("4")){
-                tvState.setText(getString(R.string.alarmsilenced_fired));
+                tvState.setText(getString(R.string.alarmsilenced_activated));
+                radioAlarmGroup.check(R.id.radioSilencedArm);
+            } else if (result.equals("5")){
+                tvState.setText(getString(R.string.alarmsilenced_salon_fired));
+                radioAlarmGroup.check(R.id.radioSilencedArm);
+            } else if (result.equals("6")){
+                tvState.setText(getString(R.string.alarmsilenced_garage_fired));
                 radioAlarmGroup.check(R.id.radioSilencedArm);
             }
             appWait.setVisibility(View.INVISIBLE);
