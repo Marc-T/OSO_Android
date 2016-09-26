@@ -11,11 +11,6 @@
     <string name="alarm_deactivated">Alarme désactivée</string>
     <string name="alarm_activated">Alarme activée</string>
     <string name="alarmsilenced_activated">Alarme silencieuse activée</string>
-    <string name="alarm_salon_fired">Alarme salon déclenchée</string>
-    <string name="alarm_garage_fired">Alarme garage déclenchée</string>
-    <string name="alarmsilenced_salon_fired">Alarme silencieuse salon déclenchée</string>
-    <string name="alarmsilenced_garage_fired">Alarme silencieuse garage déclenchée</string>
-    <string name="alarm_unreachable">Serveur injoignable</string>
     <string name="sw_Arm">Armer</string>
     <string name="sw_Disarm">Désarmer</string>
     <string name="sw_SilencedDisarm">Armer Silencieux</string>
@@ -23,4 +18,8 @@
     <string name="lb_LastSeen">Dernier contact : </string>
     <string name="bt_Refresh">Actualiser</string>
     <string name="lb_notif">Notifications</string>
+
+    <string name="gcm_send_message">Token notification envoyé</string>
+    <string name="registering_message">Génération du token de notification...</string>
+    <string name="token_error_message">Impossible de souscrire aux notifications</string>
 </resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "74324697999",
+    "firebase_url": "https://healthy-result-144411.firebaseio.com",
+    "project_id": "healthy-result-144411",
+    "storage_bucket": "healthy-result-144411.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74324697999:android:b6a8023b7dd7f6b6",
+        "android_client_info": {
+          "package_name": "com.blackorwhite.oso"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74324697999-ak5aeuav9em6l0loretg5a9dm0r73fae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7mp_QhLi_9dNMHeJglDH2QH0rcJWfodw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

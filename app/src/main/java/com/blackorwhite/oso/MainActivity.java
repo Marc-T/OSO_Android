@@ -1,44 +1,121 @@
 package com.blackorwhite.oso;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends Activity {
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "MainActivity";
     public RadioGroup radioAlarmGroup;
-    public Switch swAlarm;
     public ProgressBar appWait;
     public TextView tvLastSeen;
     public TextView tvState;
-    private OSOClient Cli;
-    public CheckStateAlarmReceiver alarm = new CheckStateAlarmReceiver();
+    private OSOAndroidClient Cli;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
+    private TextView mInformationTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Cli = new OSOClient((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
+        Cli = new OSOAndroidClient((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
         radioAlarmGroup =  (RadioGroup) findViewById(R.id.radioAlarmGroup);
-        swAlarm = (Switch) findViewById(R.id.sw_alarm);
         appWait = (ProgressBar) findViewById(R.id.progressBar);
         tvLastSeen = (TextView) findViewById(R.id.tv_lastseen);
         tvState = (TextView) findViewById(R.id.tv_state);
 
         getStateForSwitch();
 
-        swAlarm.setChecked(alarm.getAlarmState(this));
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                appWait.setVisibility(ProgressBar.GONE);
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    mInformationTextView.setText(getString(R.string.gcm_send_message));
+                } else {
+                    mInformationTextView.setText(getString(R.string.token_error_message));
+                }
+            }
+        };
+        mInformationTextView = (TextView) findViewById(R.id.informationTextView);
+
+        // Registering BroadcastReceiver
+        registerReceiver();
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        isReceiverRegistered = false;
+        super.onPause();
+    }
+
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
     public void onRGClick(View v) {
@@ -57,24 +134,13 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void onswAlarmClicked(View view) {
-        if (((Switch) view).isChecked())
-        {
-            alarm.setAlarm(this);
-        }
-        else
-        {
-            alarm.cancelAlarm(this);
-        }
-    }
-
     public void onbtRefreshClicked(View view) {
         getStateForSwitch();
     }
 
     private void setAction(String Act)
     {
-        appWait.setVisibility(View.VISIBLE);
+        appWait.setVisibility(ProgressBar.VISIBLE);
         if (Cli.CheckConnectivity())
         {
             new SetActionTask().execute(Act);
@@ -97,7 +163,7 @@ public class MainActivity extends Activity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            appWait.setVisibility(View.INVISIBLE);
+            appWait.setVisibility(ProgressBar.GONE);
         }
     }
 
@@ -134,22 +200,22 @@ public class MainActivity extends Activity {
                 tvState.setText(getString(R.string.alarm_activated));
                 radioAlarmGroup.check(R.id.radioArm);
             } else if (result.equals("2")){
-                tvState.setText(getString(R.string.alarm_salon_fired));
+                tvState.setText(OSOAndroidClient.alarm_salon_fired);
                 radioAlarmGroup.check(R.id.radioArm);
             } else if (result.equals("3")){
-                tvState.setText(getString(R.string.alarm_garage_fired));
+                tvState.setText(OSOAndroidClient.alarm_garage_fired);
                 radioAlarmGroup.check(R.id.radioSilencedArm);
             } else if (result.equals("4")){
                 tvState.setText(getString(R.string.alarmsilenced_activated));
                 radioAlarmGroup.check(R.id.radioSilencedArm);
             } else if (result.equals("5")){
-                tvState.setText(getString(R.string.alarmsilenced_salon_fired));
+                tvState.setText(OSOAndroidClient.alarmsilenced_salon_fired);
                 radioAlarmGroup.check(R.id.radioSilencedArm);
             } else if (result.equals("6")){
-                tvState.setText(getString(R.string.alarmsilenced_garage_fired));
+                tvState.setText(OSOAndroidClient.alarmsilenced_garage_fired);
                 radioAlarmGroup.check(R.id.radioSilencedArm);
             }
-            appWait.setVisibility(View.INVISIBLE);
+            appWait.setVisibility(ProgressBar.GONE);
         }
     }
 }

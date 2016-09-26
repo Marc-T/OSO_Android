@@ -16,16 +16,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lb_notif"
-        android:id="@+id/sw_alarm"
-        android:onClick="onswAlarmClicked"
-        android:layout_below="@+id/radioAlarmGroup"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,16 +23,8 @@
         android:id="@+id/Refresh"
         android:layout_above="@+id/progressBar"
         android:layout_centerHorizontal="true"
-        android:onClick="onbtRefreshClicked" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lb_LastSeen"
-        android:id="@+id/tv_titlelastseen"
-        android:layout_below="@+id/sw_alarm"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:onClick="onbtRefreshClicked"
+        android:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -109,5 +91,25 @@
             android:onClick="onRGClick"/>
 
     </RadioGroup>
+
+    <TextView
+        android:text="@string/registering_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_titlestate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/informationTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lb_LastSeen"
+        android:id="@+id/tv_titlelastseen"
+        android:layout_below="@+id/radioAlarmGroup"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
