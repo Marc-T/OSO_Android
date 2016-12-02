@@ -49,7 +49,7 @@ public class CronController extends HttpServlet {
         catch (IOException ex) {
             NbTry.SetValue(NbTry.GetValue() + 1);
 
-            if (NbTry.GetValue() > 3 && LastState.GetValue() > 0)
+            if (NbTry.GetValue() > 15 && LastState.GetValue() > 0)
                 _Msg.sendMessage(OSOClient.alarm_unreachable);
         }
         finally {
