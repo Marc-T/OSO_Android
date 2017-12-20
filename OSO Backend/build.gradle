@@ -6,7 +6,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.34'
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.3.3'
     }
 }
 
@@ -16,28 +17,32 @@ repositories {
 
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'appengine'
+
+apply plugin: 'com.google.cloud.tools.appengine'
+apply plugin: 'com.google.cloud.tools.endpoints-framework-server'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
-    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.34'
-    compile 'com.google.appengine:appengine-endpoints:1.9.34'
-    compile 'com.google.appengine:appengine-endpoints-deps:1.9.34'
+    compile 'com.google.endpoints:endpoints-framework:2.0.9'
+    compile 'javax.inject:javax.inject:1'
     compile 'javax.servlet:servlet-api:2.5'
     compile 'com.googlecode.objectify:objectify:5.1.9'
     compile 'com.google.gcm:gcm-server:1.0.0'
   //  compile project(path: ':app')
 }
 
-appengine {
-    downloadSdk = true
-    appcfg {
-        oauth2 = true
-    }
-    endpoints {
-        getClientLibsOnBuild = true
-        getDiscoveryDocsOnBuild = true
+appengine {  // App Engine tasks configuration
+    deploy {   // deploy configuration
+
+        // The following is used for acceptance tests and
+        // is not required for a migration.
+        project = findProperty("appengine.deploy.project")
+        version = findProperty("appengine.deploy.version")
+        def promoteProp = findProperty("appengine.deploy.promote")
+        if (promoteProp != null) {
+            promote = new Boolean(promoteProp)
+        }
     }
 }

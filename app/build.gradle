@@ -1,12 +1,22 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        // V2: Add the new Endpoints Framework plugin dependencies
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
+    }
+}
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.blackorwhite.oso"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -24,7 +34,9 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
     compile 'com.google.code.findbugs:jsr305:2.0.1'
-    compile project(path: ':OSO Backend', configuration: 'android-endpoints')
+    endpointsServer project(path: ':OSO Backend', configuration: 'endpoints')
+    compile 'com.google.api-client:google-api-client:+'
+    compile 'com.google.http-client:google-http-client-android:1.22.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
