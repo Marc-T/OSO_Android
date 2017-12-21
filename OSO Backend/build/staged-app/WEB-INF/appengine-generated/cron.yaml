@@ -1,5 +1,0 @@
-cron:
-- description: 'OSO Cron Job'
-  url: /cron/mycronjob
-  schedule: every 1 minutes
-  timezone: UTC
